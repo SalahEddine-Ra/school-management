@@ -18,6 +18,8 @@ class RoleAndAdminSeeder extends Seeder
         Role::firstOrCreate(['name' => 'admin']);
         Role::firstOrCreate(['name' => 'teacher']);
         Role::firstOrCreate(['name' => 'student']);
+        Role::firstOrCreate(['name' => 'guardian']);
+        Role::firstOrCreate(['name' => 'accountant']);
 
         // Create a super admin user
         $admin = User::firstOrCreate(
