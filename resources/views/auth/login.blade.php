@@ -45,4 +45,16 @@
             </x-primary-button>
         </div>
     </form>
+
+    <div class="mt-6 bg-gray-100 dark:bg-gray-800 p-4 rounded-md border border-gray-300 dark:border-gray-700 text-sm">
+        <h3 class="font-bold text-gray-700 dark:text-gray-300 mb-2">Demo Credentials:</h3>
+        <ul class="space-y-1 text-gray-600 dark:text-gray-400">
+            <li><strong>Admin:</strong> admin@admin.com / password</li>
+            <li><strong>Teacher:</strong> teacher@school.com / password</li>
+            <li><strong>Student:</strong> student@school.com / password</li>
+            <li><strong>Guardian:</strong> guardian@school.com / password</li>
+            <li><strong>Accountant:</strong> accountant@school.com / password</li>
+        </ul>
+        <p class="mt-2 text-xs italic text-gray-500">Clicking on any role isn't automated, just copy/paste these above.</p>
+    </div>
 </x-guest-layout>

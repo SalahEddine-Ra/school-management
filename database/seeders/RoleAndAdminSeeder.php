@@ -30,5 +30,30 @@ class RoleAndAdminSeeder extends Seeder
             ]
         );
         $admin->assignRole('admin');
+
+        // Create test users for other roles
+        $teacher = User::firstOrCreate(
+            ['email' => 'teacher@school.com'],
+            ['name' => 'Test Teacher', 'password' => Hash::make('password')]
+        );
+        $teacher->assignRole('teacher');
+
+        $student = User::firstOrCreate(
+            ['email' => 'student@school.com'],
+            ['name' => 'Test Student', 'password' => Hash::make('password')]
+        );
+        $student->assignRole('student');
+
+        $guardian = User::firstOrCreate(
+            ['email' => 'guardian@school.com'],
+            ['name' => 'Test Guardian', 'password' => Hash::make('password')]
+        );
+        $guardian->assignRole('guardian');
+
+        $accountant = User::firstOrCreate(
+            ['email' => 'accountant@school.com'],
+            ['name' => 'Test Accountant', 'password' => Hash::make('password')]
+        );
+        $accountant->assignRole('accountant');
     }
 }

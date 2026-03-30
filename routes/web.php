@@ -4,6 +4,15 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
+Route::get('/run-seed', function () {
+    \Illuminate\Support\Facades\Artisan::call('migrate:fresh', [
+        '--seed' => true,
+        '--force' => true
+    ]);
+    return 'Database migrated and seeded successfully with test users! <a href="/login">Go to login</a>';
+});
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -12,10 +21,10 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
     
     Route::get('/dashboard', function () {
-        $user = auth()->user();
-        if ($user->hasRole('admin')) return redirect()->route('admin.dashboard');
-        if ($user->hasRole('teacher')) return redirect()->route('teacher.dashboard');
-        if ($user->hasRole('student')) return redirect()->route('student.dashboard');
+        $user = Auth::user();
+        if ($user->roles->contains('name', 'admin')) return redirect()->route('admin.dashboard');
+        if ($user->roles->contains('name', 'teacher')) return redirect()->route('teacher.dashboard');
+        if ($user->roles->contains('name', 'student')) return redirect()->route('student.dashboard');
         return abort(403, 'Unauthorized action.');
     })->name('dashboard');
 
@@ -34,7 +43,7 @@ Route::middleware(['auth'])->group(function () {
     // Teacher Routes
     Route::middleware(['role:teacher'])->group(function () {
         Route::get('/teacher/dashboard', function () {
-            $teacher = auth()->user()->teacher;
+            $teacher = Auth::user()->teacher;
             $classes = $teacher ? $teacher->classes : collect();
             return view('teacher.dashboard', compact('classes'));
         })->name('teacher.dashboard');
@@ -43,7 +52,7 @@ Route::middleware(['auth'])->group(function () {
     // Student Routes
     Route::middleware(['role:student'])->group(function () {
         Route::get('/student/dashboard', function () {
-            $student = auth()->user()->student;
+            $student = Auth::user()->student;
             $classes = $student ? $student->classes : collect();
             return view('student.dashboard', compact('classes'));
         })->name('student.dashboard');
